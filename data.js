@@ -31,6 +31,7 @@ const SESSIONS = [
   {
     id: 1,
     code: "EP.01",
+    date: "2026-06-12", // 開催日。前日0:00に解禁される
     phase: "VIBE ON",
     theme: "ウォーミングアップ",
     title: "考えるな、感じろ。聞こえるか、その声が。",
@@ -137,6 +138,7 @@ const SESSIONS = [
   {
     id: 2,
     code: "EP.02",
+    date: "2026-06-19",
     phase: "PROMPT",
     theme: "テーマ1：爆速プロトタイピング（前編）",
     title: "プロンプトは仕様書だ。",
@@ -200,6 +202,7 @@ const SESSIONS = [
   {
     id: 3,
     code: "EP.03",
+    date: "2026-06-26",
     phase: "BUILD",
     theme: "テーマ1：爆速プロトタイピング（後編）",
     title: "while (vibe) { improve(); }",
@@ -263,6 +266,7 @@ const SESSIONS = [
   {
     id: 4,
     code: "EP.04",
+    date: "2026-07-03",
     phase: "VERIFY",
     theme: "テーマ2：クライアントワーク（前編）",
     title: "要件は、変わる。",
@@ -334,6 +338,7 @@ const SESSIONS = [
   {
     id: 5,
     code: "EP.05",
+    date: "2026-07-10",
     phase: "VERIFY",
     theme: "テーマ2：クライアントワーク（後編）",
     title: "変化を、価値に変えろ。",
@@ -385,6 +390,7 @@ const SESSIONS = [
   {
     id: 6,
     code: "EP.06",
+    date: "2026-07-17",
     phase: "VERIFY",
     theme: "テーマ3：品質と出荷（前編）",
     title: "品質も、妥協なし。",
@@ -448,6 +454,7 @@ const SESSIONS = [
   {
     id: 7,
     code: "EP.07",
+    date: "2026-07-24",
     phase: "SHIP",
     theme: "テーマ3：品質と出荷（後編）",
     title: "世界に、出せ。",
@@ -504,6 +511,7 @@ const SESSIONS = [
   {
     id: 8,
     code: "EP.08",
+    date: "2026-07-31",
     phase: "EVOLVE",
     theme: "卒業制作",
     title: "DEMO DAY ─ 秒で、創れ。",

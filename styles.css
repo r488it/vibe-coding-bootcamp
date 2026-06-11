@@ -171,6 +171,37 @@ a { color: var(--gold-bright); }
   background: rgba(6, 6, 7, .8);
 }
 
+/* ---------- 開催日ロック ---------- */
+.session-card.locked { filter: grayscale(.9) brightness(.65); }
+.session-card.locked:hover { transform: none; border-color: var(--line); box-shadow: none; }
+.lock-overlay {
+  position: absolute; inset: 0; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 5px;
+  background: rgba(4, 4, 5, .55); backdrop-filter: blur(1.5px);
+  font-size: 2rem;
+}
+.lock-overlay small {
+  font-family: var(--mono); font-size: .64rem; color: var(--gold);
+  letter-spacing: 1.5px; background: rgba(4, 4, 5, .7); padding: 3px 9px;
+  border: 1px solid var(--gold-deep); border-radius: 2px;
+}
+.locked-hero {
+  text-align: center; padding: 70px 24px;
+  border: 1px solid var(--line); outline: 1px solid rgba(60, 53, 32, .5); outline-offset: 5px;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 30%, rgba(201, 164, 74, .06), transparent 70%),
+    linear-gradient(165deg, #0e0e12, #060608);
+  border-radius: 3px;
+}
+.locked-hero .lock-big { font-size: 4.2rem; filter: drop-shadow(0 0 24px rgba(201, 164, 74, .35)); }
+.locked-hero h2 {
+  font-family: var(--stencil); font-weight: 700; color: var(--gold);
+  letter-spacing: 7px; margin: 16px 0 18px; font-size: clamp(1.3rem, 4vw, 2rem);
+}
+.locked-hero .lock-line { font-family: var(--mincho); font-weight: 800; font-size: 1.15rem; color: #f2edda; letter-spacing: 3px; margin-bottom: 16px; }
+.locked-hero .lock-date { font-family: var(--mono); color: var(--gold-bright); line-height: 2; letter-spacing: 2px; margin-bottom: 14px; }
+.locked-hero .lock-note { font-family: var(--mincho); color: var(--dim); font-size: .9rem; letter-spacing: 1px; margin-bottom: 28px; }
+
 /* ---------- info panels (top page) ---------- */
 .panel-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 14px; }
 .info-panel {

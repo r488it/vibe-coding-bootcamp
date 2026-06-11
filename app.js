@@ -13,6 +13,35 @@ const getProgress = () => { try { return JSON.parse(localStorage.getItem(PROG_KE
 const setProgress = (p) => localStorage.setItem(PROG_KEY, JSON.stringify(p));
 const toggleDone = (id) => { const p = getProgress(); p[id] = !p[id]; setProgress(p); render(); };
 
+// ---------- 開催日ロック ----------
+// 各EPは data.js の date（開催日）の前日 0:00 に解禁される。
+const INSTRUCTOR_KEY = "vcb_instructor";
+const isInstructorMode = () => localStorage.getItem(INSTRUCTOR_KEY) === "on";
+const WD = ["日", "月", "火", "水", "木", "金", "土"];
+const fmtD = (d) => `${d.getMonth() + 1}/${d.getDate()}(${WD[d.getDay()]})`;
+const fmtDateJP = (iso) => fmtD(new Date(iso + "T00:00:00"));
+function unlockDate(s) {
+  const d = new Date(s.date + "T00:00:00");
+  d.setDate(d.getDate() - 1); // 前日0:00
+  return d;
+}
+const isLocked = (s) => !!s.date && !isInstructorMode() && new Date() < unlockDate(s);
+
+// 講師モード：ロゴを素早く7回クリックで全ロック解除（READMEに記載・受講者には内緒）
+let logoTaps = 0, logoTapTimer = null;
+function logoTap() {
+  clearTimeout(logoTapTimer);
+  logoTaps++;
+  logoTapTimer = setTimeout(() => { logoTaps = 0; }, 2500);
+  if (logoTaps >= 7) {
+    logoTaps = 0;
+    const on = !isInstructorMode();
+    localStorage.setItem(INSTRUCTOR_KEY, on ? "on" : "off");
+    alert(on ? "🎓 講師モード ON ─ 全EPのロックを解除しました" : "🔒 講師モード OFF ─ 開催日ロックが有効になりました");
+    render();
+  }
+}
+
 // ============================================================
 // ROUTER
 // ============================================================
@@ -55,14 +84,17 @@ function renderTop() {
 
     <h2 class="section-title">MISSION SELECT <span style="font-family:var(--mono);font-size:.75rem;color:var(--dim)">修了 ${doneCount}/8</span></h2>
     <div class="session-grid">
-      ${SESSIONS.map((s) => `
-        <div class="session-card" style="--card-color:${s.color}" onclick="location.hash='#/session/${s.id}'">
-          <div class="code"><span>${s.code}</span><span>60 MIN</span></div>
+      ${SESSIONS.map((s) => {
+        const locked = isLocked(s);
+        return `
+        <div class="session-card${locked ? " locked" : ""}" style="--card-color:${s.color}" onclick="location.hash='#/session/${s.id}'">
+          <div class="code"><span>${s.code}</span><span>${s.date ? fmtDateJP(s.date) : "60 MIN"}</span></div>
           <div class="phase">${esc(s.phase)}</div>
-          <h3>${esc(s.title)}</h3>
-          <div class="theme">${esc(s.theme)}</div>
+          <h3>${locked ? "？？？" : esc(s.title)}</h3>
+          <div class="theme">${locked ? "─ CLASSIFIED ─" : esc(s.theme)}</div>
           ${prog[s.id] ? `<div class="done-stamp">MISSION CLEAR</div>` : ""}
-        </div>`).join("")}
+          ${locked ? `<div class="lock-overlay">🔒<small>${fmtD(unlockDate(s))} 0:00 解禁</small></div>` : ""}
+        </div>`; }).join("")}
     </div>
 
     <h2 class="section-title">HAT SYSTEM</h2>
@@ -119,8 +151,9 @@ function renderTop() {
 function headerHTML() {
   return `
     <header class="site-header">
-      <a class="site-logo" href="#/">VIBE CODING BOOTCAMP<small>AI DRIVEN SYSTEM DEVELOPMENT</small></a>
+      <a class="site-logo" href="#/" onclick="logoTap()">VIBE CODING BOOTCAMP<small>AI DRIVEN SYSTEM DEVELOPMENT</small></a>
       <div class="header-actions">
+        ${isInstructorMode() ? `<span class="auto-badge">🎓 講師モード（全EP解禁中）</span>` : ""}
         <button class="btn" onclick="location.hash='#/gacha'">🎰 お題ガチャ</button>
         <button class="btn" onclick="openTimer({title:'FREE TIMER', phase:'ACTIVE LEARNING', minutes:25})">⏱ タイマー</button>
         <button class="btn bgmBtn" onclick="toggleBgm()">${SOUND.bgm ? "🎵 BGM ON" : "🎵 BGM OFF"}</button>
@@ -135,6 +168,7 @@ function headerHTML() {
 function renderSession(id) {
   const s = SESSIONS.find((x) => x.id === id);
   if (!s) { location.hash = "#/"; return; }
+  if (isLocked(s)) { renderLockedSession(s); return; } // 解禁前は中身を見せない
   const prog = getProgress();
   let clock = 0;
 
@@ -204,6 +238,21 @@ function renderSession(id) {
 }
 
 const fmtClock = (min) => `${String(Math.floor(min / 60)).padStart(1, "0")}:${String(min % 60).padStart(2, "0")}`;
+
+// 解禁前のEPページ
+function renderLockedSession(s) {
+  app.innerHTML = `
+    ${headerHTML()}
+    <div class="breadcrumb"><a href="#/">⬅ MISSION SELECT</a> / ${s.code}</div>
+    <section class="locked-hero">
+      <div class="lock-big">🔒</div>
+      <h2>${s.code} ─ CLASSIFIED</h2>
+      <p class="lock-line">この回は、まだ解禁されていない。</p>
+      <p class="lock-date">解禁：${fmtD(unlockDate(s))} 0:00（開催前日）<br>開催：${fmtDateJP(s.date)}</p>
+      <p class="lock-note">焦るな。その日まで、前回の作品を磨いておけ。</p>
+      <button class="btn primary big" onclick="location.hash='#/'">⬅ MISSION SELECT へ戻る</button>
+    </section>`;
+}
 
 // ============================================================
 // BRIEFING (FDE風 自動解説プレゼン)

@@ -336,11 +336,11 @@ a { color: var(--gold-bright); }
   padding: 20px;
 }
 .timer-overlay.open { display: flex; }
-.timer-overlay .t-phase { font-family: var(--mono); color: var(--gold); letter-spacing: 5px; font-size: .82rem; text-align: center; }
+.timer-overlay .t-phase { font-family: var(--mono); color: var(--gold); letter-spacing: 5px; font-size: clamp(.82rem, 1.1vw, 1.2rem); text-align: center; }
 .timer-overlay .t-title {
   font-family: var(--mincho); font-weight: 800;
-  font-size: clamp(1.2rem, 3.6vw, 2rem); color: #f4efdc; text-align: center;
-  max-width: 900px; line-height: 1.5; letter-spacing: 2px;
+  font-size: clamp(1.2rem, 2.6vw, 2.9rem); color: #f4efdc; text-align: center;
+  max-width: min(1200px, 88vw); line-height: 1.5; letter-spacing: 2px;
 }
 .timer-display {
   font-family: var(--mono); font-size: clamp(5rem, 22vw, 15rem); line-height: 1;
@@ -370,7 +370,7 @@ a { color: var(--gold-bright); }
 
 /* クライアントのつぶやき（タイマー中の自動イベント） */
 .client-murmur {
-  position: absolute; left: 24px; bottom: 120px; max-width: min(460px, 80vw);
+  position: absolute; left: 24px; bottom: 120px; max-width: min(620px, 80vw);
   background: linear-gradient(180deg, rgba(179, 38, 46, .16), rgba(0, 0, 0, .5));
   border: 1px solid var(--red); outline: 1px solid rgba(179, 38, 46, .35); outline-offset: 3px;
   border-radius: 2px; padding: 15px 19px;
@@ -383,7 +383,7 @@ a { color: var(--gold-bright); }
   font-family: var(--mono); font-size: .6rem; color: #d4555c;
   letter-spacing: 2px; display: block; margin-bottom: 7px;
 }
-.cm-text { font-family: var(--mincho); font-weight: 600; font-size: 1.02rem; line-height: 1.8; color: var(--text); }
+.cm-text { font-family: var(--mincho); font-weight: 600; font-size: clamp(1.02rem, 1.4vw, 1.45rem); line-height: 1.8; color: var(--text); }
 
 /* ---------- briefing presentation（漆黒の劇場） ---------- */
 .brief-overlay {
@@ -467,7 +467,7 @@ a { color: var(--gold-bright); }
   position: relative; z-index: 1;
 }
 .brief-stage .b-phase {
-  font-family: var(--mono); color: var(--gold); letter-spacing: 6px; font-size: clamp(.68rem, 1.6vw, .9rem);
+  font-family: var(--mono); color: var(--gold); letter-spacing: 6px; font-size: clamp(.68rem, 1.3vw, 1.2rem);
   animation: phaseIn .9s ease both;
 }
 @keyframes phaseIn {
@@ -476,7 +476,7 @@ a { color: var(--gold-bright); }
 }
 .brief-stage .b-title {
   font-family: var(--mincho); font-weight: 800;
-  font-size: clamp(2rem, 6.4vw, 4.2rem); line-height: 1.3; letter-spacing: 4px;
+  font-size: clamp(2rem, 5.6vw, 5.8rem); line-height: 1.3; letter-spacing: 4px;
   background: var(--gold-grad);
   background-size: 100% 220%;
   -webkit-background-clip: text; background-clip: text;
@@ -487,10 +487,10 @@ a { color: var(--gold-bright); }
 .brief-stage .b-title.go {
   animation: slideIn .6s ease both, goldShimmer 2.4s 1s ease-in-out infinite, pulse 1.8s 1.2s infinite;
 }
-.brief-stage .b-meta { font-family: var(--mincho); font-size: clamp(.95rem, 2.3vw, 1.3rem); color: var(--gold); font-weight: 600; letter-spacing: 2px; animation: slideIn .5s .2s ease both; }
+.brief-stage .b-meta { font-family: var(--mincho); font-size: clamp(.95rem, 1.9vw, 1.8rem); color: var(--gold); font-weight: 600; letter-spacing: 2px; animation: slideIn .5s .2s ease both; }
 .brief-stage .b-heading {
   font-family: var(--mincho); font-weight: 800;
-  font-size: clamp(1.5rem, 4.2vw, 2.7rem); color: var(--gold-bright); letter-spacing: 3px;
+  font-size: clamp(1.5rem, 3.4vw, 3.8rem); color: var(--gold-bright); letter-spacing: 3px;
   text-shadow: 0 0 36px rgba(201, 164, 74, .4);
   position: relative; padding-bottom: 14px;
   clip-path: inset(0 100% 0 0);
@@ -505,11 +505,11 @@ a { color: var(--gold-bright); }
 }
 @keyframes lineDraw { to { width: 100%; } }
 .brief-stage .b-bullets {
-  list-style: none; display: flex; flex-direction: column; gap: 14px; max-width: 880px;
+  list-style: none; display: flex; flex-direction: column; gap: clamp(14px, 1.4vw, 22px); max-width: min(1160px, 86vw);
 }
 .brief-stage .b-bullets li {
   font-family: var(--mincho); font-weight: 600;
-  font-size: clamp(1rem, 2.6vw, 1.55rem); line-height: 1.8; color: var(--text);
+  font-size: clamp(1rem, 2.1vw, 2.15rem); line-height: 1.8; color: var(--text);
   padding: 13px 28px; border: 1px solid rgba(60, 53, 32, .8); border-left: 3px solid var(--gold);
   background: linear-gradient(90deg, rgba(201, 164, 74, .06), rgba(8, 8, 10, .85) 30%);
   text-align: left; letter-spacing: 1px;
@@ -517,11 +517,11 @@ a { color: var(--gold-bright); }
 }
 @keyframes slideIn { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
 .brief-stage .b-code {
-  font-family: var(--mono); font-size: clamp(.8rem, 1.9vw, 1.05rem); line-height: 1.75;
+  font-family: var(--mono); font-size: clamp(.8rem, 1.5vw, 1.5rem); line-height: 1.75;
   text-align: left; white-space: pre-wrap; word-break: break-word;
   background: rgba(0, 0, 0, .65); border: 1px solid var(--gold-deep);
   outline: 1px solid rgba(138, 109, 47, .35); outline-offset: 4px;
-  padding: 20px 26px; max-width: min(820px, 90vw); color: var(--gold-bright);
+  padding: 20px 26px; max-width: min(1040px, 88vw); color: var(--gold-bright);
   box-shadow: inset 0 0 30px rgba(201, 164, 74, .07);
   clip-path: inset(0 0 100% 0); opacity: 0;
   animation: codeReveal .9s .45s cubic-bezier(.6, 0, .2, 1) forwards;
@@ -531,7 +531,7 @@ a { color: var(--gold-bright); }
   30%  { opacity: 1; }
   100% { clip-path: inset(0 0 0 0); opacity: 1; }
 }
-.brief-stage .b-go-btn { font-family: var(--mincho); font-weight: 800; font-size: clamp(1.05rem, 2.8vw, 1.5rem); padding: 18px 44px; letter-spacing: 3px; animation: slideIn .5s .3s ease both; opacity: 0; }
+.brief-stage .b-go-btn { font-family: var(--mincho); font-weight: 800; font-size: clamp(1.05rem, 2.2vw, 2.1rem); padding: clamp(18px, 1.8vw, 26px) clamp(44px, 4vw, 64px); letter-spacing: 3px; animation: slideIn .5s .3s ease both; opacity: 0; }
 .brief-bottombar { padding: 14px 18px 22px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
 .brief-dots { display: flex; gap: 9px; }
 .b-dot { width: 8px; height: 8px; transform: rotate(45deg); border: 1px solid var(--dim); display: inline-block; transition: all .25s; }
@@ -571,4 +571,41 @@ a { color: var(--gold-bright); }
 @media (max-width: 640px) {
   .agenda-item { grid-template-columns: 64px 1fr; }
   .agenda-item .timer-launch { grid-column: 1 / -1; }
+}
+
+/* ---------- 大画面（1920×1080以上のプロジェクター/モニター） ---------- */
+@media (min-width: 1600px) {
+  #app { max-width: 1380px; }
+  .site-logo { font-size: 1.5rem; }
+  .btn { font-size: 1rem; padding: 11px 20px; }
+  .hero .sub { font-size: 1.3rem; }
+  .hero .promise { font-size: 1.1rem; }
+  .section-title { font-size: 1.8rem; }
+  .session-grid { grid-template-columns: repeat(4, 1fr); gap: 18px; }
+  .session-card h3 { font-size: 1.3rem; }
+  .session-card .theme { font-size: .88rem; }
+  .info-panel li { font-size: 1rem; }
+  /* セッション詳細：講義・ワークのタイムラインを大きく */
+  .session-hero h2 { font-size: 2.8rem; }
+  .session-hero .subtitle { font-size: 1.15rem; }
+  .session-hero .goal-item { font-size: 1.05rem; }
+  .agenda-item { padding: 20px 24px; grid-template-columns: 110px 1fr auto; }
+  .agenda-item .mins { font-size: 1.7rem; }
+  .agenda-item .body h4 { font-size: 1.25rem; }
+  .agenda-item .body p { font-size: 1.02rem; }
+  .tag { font-size: .74rem; }
+  .hat-chip { font-size: .9rem; }
+  .timer-launch { font-size: 1rem; padding: 13px 22px; }
+  .tips-box { font-size: 1.02rem; }
+  /* ハットドック（投影時に教室の後ろから見える大きさに） */
+  .hat-current .emoji { font-size: 2.3rem; }
+  .hat-current .label b { font-size: 1.2rem; }
+  .hat-current { padding: 12px 26px 12px 16px; }
+  /* ガチャ */
+  .gacha-result .odai { font-size: 2.8rem; }
+  /* ブリーフィングの補助要素 */
+  .brief-hint { font-size: .8rem; }
+  .b-dot { width: 10px; height: 10px; }
+  .auto-badge { font-size: .8rem; }
+  .timeup-msg { font-size: 3.4rem; }
 }

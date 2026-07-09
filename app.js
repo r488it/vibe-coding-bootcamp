@@ -366,7 +366,7 @@ function buildActivitySlides(s, a) {
 
   // 解説スライド（data.jsで定義）
   (a.slides || [{ h: a.title, b: [a.desc], say: a.desc }]).forEach((sl) => {
-    slides.push({ kind: "content", phase: `${s.code} ─ ${a.title}`, h: sl.h, b: sl.b, code: sl.code, say: sl.say });
+    slides.push({ kind: "content", phase: `${s.code} ─ ${a.title}`, h: sl.h, b: sl.b, code: sl.code, html: sl.html, img: sl.img, say: sl.say });
   });
 
   // GOスライド（自動生成）
@@ -433,6 +433,8 @@ function renderBriefSlide() {
     if (autopilot.active) inner += `<div class="b-meta" style="font-size:.85rem;color:var(--dim)">🔁 AUTO RUN中 ─ ナレーション後に自動で進みます</div>`;
   } else {
     inner += `<div class="b-heading">${esc(sl.h)}</div>`;
+    if (sl.img) inner += `<img class="b-img" src="${esc(sl.img)}" alt="">`; // 画像スライド
+    if (sl.html) inner += `<div class="b-visual">${sl.html}</div>`; // 図解スライド（data.jsで定義した信頼済みHTML）
     if (sl.code) inner += `<pre class="b-code">${esc(sl.code)}</pre>`;
     if (sl.b && sl.b.length) inner += `<ul class="b-bullets">${sl.b.map((b, i) => `<li style="animation-delay:${(0.35 + i * 0.55).toFixed(2)}s">${esc(b)}</li>`).join("")}</ul>`;
   }

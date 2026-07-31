@@ -442,9 +442,9 @@ a { color: var(--gold-bright); }
   -webkit-background-clip: text; background-clip: text;
   -webkit-text-fill-color: transparent; color: transparent;
   opacity: 0;
-  /* シマー（金の光が流れる）は登場アニメ完了後に文字側で回す */
-  animation: chIn .55s cubic-bezier(.2, .9, .25, 1.2) both,
-             goldShimmer 7s 1.6s ease-in-out infinite;
+  /* 注意：クリップ文字に無限アニメ（シマー等）を掛けると
+     グリフ描画が断続的に壊れる（特に1文字目）ため、登場アニメのみに限定 */
+  animation: chIn .55s cubic-bezier(.2, .9, .25, 1.2) both;
 }
 @keyframes chIn {
   0%   { opacity: 0; transform: translateY(46px) scale(1.7); filter: blur(10px); }

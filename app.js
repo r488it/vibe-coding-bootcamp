@@ -455,7 +455,7 @@ function renderBriefSlide() {
 // generate_voice.py で全ナレーションをニューラル音声MP3に変換しておく方式。
 // 無い環境では自動でブラウザTTSにフォールバックする。
 let AUDIO_MANIFEST = null;
-fetch("audio/manifest.json")
+fetch("audio/manifest.json", { cache: "no-cache" })
   .then((r) => (r.ok ? r.json() : null))
   .then((m) => { AUDIO_MANIFEST = m; })
   .catch(() => {});
